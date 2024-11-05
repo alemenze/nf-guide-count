@@ -8,12 +8,17 @@ process ExtractUnique {
 
     container "alpine:3.12"
 
+    publishDir "${params.outdir}/unique_counts",
+        mode: "copy",
+        overwrite: true,
+        saveAs: { filename -> filename }
+
     input:
         tuple val(meta), path(stitched_reads)
         val guides
 
     output:
-        tuple val(meta), path "*_unique_sequences.csv", emit: uniqueSeqs
+        tuple val(meta), path("*_unique_sequences.csv"), emit: uniqueSeqs
 
     script:
         """
