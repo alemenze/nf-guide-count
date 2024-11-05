@@ -51,9 +51,9 @@ workflow Processing {
         )
 
         Multiqc(
-        fastqc.out.zip.collect{ it[1] },
-        trimgalore.out.zip.collect{ it[1] },
-        trimgalore.out.log.collect{ it[1] }
+        Fastqc.out.zip.collect{ it[1] },
+        Trimgalore.out.zip.collect{ it[1] },
+        Trimgalore.out.log.collect{ it[1] }
     )
 
 }
