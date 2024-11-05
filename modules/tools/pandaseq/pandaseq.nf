@@ -22,7 +22,7 @@ process Panda_Stitch {
 
     script:
         """
-        pandaseq -f ${reads[0]} -r ${reads[1]} -w ${meta}_stitched.fastq -g log.txt
+        pandaseq -f ${read1} -r ${read2} -w ${meta}_stitched.fastq -g log.txt
     
         """
 
