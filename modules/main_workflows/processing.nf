@@ -37,7 +37,7 @@ workflow Processing {
         )
 
         Panda_Stitch(
-            reads
+            Trimaglore.out.reads
         )
 
         CountGuides(

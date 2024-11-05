@@ -14,7 +14,7 @@ process Panda_Stitch {
     container "alemenze/pandaseq"
 
     input:
-        tuple val(meta), path(read1), path(read2)
+        tuple val(meta), path(reads)
     
     output:
         tuple val(meta), path("*_stitched.fastq"), emit: paired
@@ -22,7 +22,7 @@ process Panda_Stitch {
 
     script:
         """
-        pandaseq -f ${read1} -r ${read2} -w ${meta}_stitched.fastq -g log.txt
+        pandaseq -f ${reads[0]} -r ${read[1]} -w ${meta}_stitched.fastq -g log.txt
     
         """
 
