@@ -28,7 +28,7 @@ process Trimgalore {
     script:
         """
         trim_galore \\
-            --cores ${task.cpus} \\
+            --cores 8 \\
             --fastqc \\
             --paired \\
             --gzip \\
