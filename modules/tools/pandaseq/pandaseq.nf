@@ -18,11 +18,11 @@ process Panda_Stitch {
     
     output:
         tuple val(meta), path("*_stitched.fastq"), emit: paired
-        tuple val(meta), path("log.txt"), emit: pandalog
+        tuple val(meta), path("*_log.txt"), emit: pandalog
 
     script:
         """
-        pandaseq -f ${reads[0]} -r ${reads[1]} -w ${meta}_stitched.fastq -g log.txt
+        pandaseq -f ${reads[0]} -r ${reads[1]} -w ${meta}_stitched.fastq -g ${meta}_log.txt
     
         """
 

@@ -22,10 +22,10 @@ process CountGuides {
 
     script:
         """
-        echo "Label,Guide,Count" > ${params.outputDir}/${meta}_guide_counts.csv
+        echo "Label,Guide,Count" > ${meta}_guide_counts.csv
         while IFS=, read -r label guide; do
             count=\$(grep -c "\$guide" ${stitched_reads})
-            echo "\$label,\$guide,\$count" >> ${params.outputDir}/${meta}_guide_counts.csv
+            echo "\$label,\$guide,\$count" >> ${meta}_guide_counts.csv
         done <<< "\$(printf "%s\n" ${guides.collect().join('\n')})"
         """
 }
