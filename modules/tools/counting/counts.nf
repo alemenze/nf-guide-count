@@ -6,8 +6,6 @@ process CountGuides {
     tag "${meta}"
     label 'process_medium'
 
-    container "alpine:3.12"
-
     publishDir "${params.outdir}/counts",
         mode: "copy",
         overwrite: true,

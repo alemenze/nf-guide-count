@@ -6,8 +6,6 @@ process ExtractUnique {
     tag "${meta}"
     label 'process_medium'
 
-    container "alpine:3.12"
-
     publishDir "${params.outdir}/unique_counts",
         mode: "copy",
         overwrite: true,
