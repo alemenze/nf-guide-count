@@ -13,16 +13,21 @@ process ExtractUnique {
 
     input:
         tuple val(meta), path(stitched_reads)
-        val guides
+        path(params.guides), stageAs: 'guides.csv'
 
     output:
         tuple val(meta), path("*_unique_sequences.csv"), emit: uniqueSeqs
 
     script:
         """
-        echo "Label,String,Upstream-Downstream Sequence,Count" > ${meta}_unique_sequences.csv
-        while IFS=, read -r label guide; do
-            grep -B1 -A1 "\$guide" ${stitched_reads} | awk -v label="\$label" -v str="\$guide" '
+        echo "Name,String,Upstream-Downstream Sequence,Count" >> ${meta}_unique_sequences.csv
+        while IFS=, read -r name guide; do
+            # Skip the header line if it's the first line
+            if [[ "$name" == "name" && "$guide" == "guide" ]]; then
+                continue
+            fi
+            
+            grep -B1 -A1 "\$guide" ${stitched_reads} | awk -v name="\$name" -v str="\$guide" '
             BEGIN { FS = "" }
             {
                 if (NR % 4 == 2) {
@@ -37,13 +42,13 @@ process ExtractUnique {
             }
             END {
                 for (seq in sequence_counts) {
-                    print label "," str "," seq "," sequence_counts[seq];
+                    print name "," str "," seq "," sequence_counts[seq];
                 }
             }' >> temp_sequences.csv
-        done <<< "\$(printf "%s\n" ${guides.collect().join('\n')})"
+        done < guides.csv
 
         # Consolidate counts for unique sequences
-        awk -F, '{count[\$3] += \$4} END {for (seq in count) print seq "," count[seq]}' temp_sequences.csv > ${meta}_unique_sequences.csv
+        awk -F, '{count[\$3] += \$4} END {for (seq in count) print seq "," count[seq]}' temp_sequences.csv >> ${meta}_unique_sequences.csv
         rm -f temp_sequences.csv
         """
 }

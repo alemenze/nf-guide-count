@@ -47,12 +47,6 @@ Channel
     .map{ row -> tuple(row.sample_id), file(row.read1), file(row.read2) }
     .set{ fastqs }
 
-Channel
-    .fromPath(params.guides)
-    .splitCsv(header: true)
-    .map { row -> [ row.name, row.guide ] }
-    .set { guides }
-
 ////////////////////////////////////////////////////
 /* --              IMPORT MODULES              -- */
 ////////////////////////////////////////////////////
@@ -64,7 +58,6 @@ include { Processing } from './modules/main_workflows/processing'
 // Full workflow
 workflow {
     Processing(
-        fastqs,
-        guides
+        fastqs
     )
 }

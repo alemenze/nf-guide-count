@@ -24,7 +24,6 @@ include { Multiqc } from '../tools/multiqc/multiqc'
 workflow Processing {
     take:
         reads
-        guides
 
     main:
 
@@ -41,13 +40,11 @@ workflow Processing {
         )
 
         CountGuides(
-            Panda_Stitch.out.paired,
-            guides
+            Panda_Stitch.out.paired
         )
 
         ExtractUnique(
-            Panda_Stitch.out.paired,
-            guides
+            Panda_Stitch.out.paired
         )
 
         Multiqc(
