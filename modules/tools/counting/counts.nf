@@ -28,6 +28,6 @@ process CountGuides {
             fi
             count=\$(grep -c "\$guide" ${stitched_reads})
             echo "\$name,\$guide,\$count" >> ${meta}_guide_counts.csv
-        done < ${guides}
+        done < "${guides}"
         """
 }

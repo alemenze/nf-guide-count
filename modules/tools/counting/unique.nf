@@ -45,7 +45,7 @@ process ExtractUnique {
                     print name "," str "," seq "," sequence_counts[seq];
                 }
             }' >> temp_sequences.csv
-        done < ${guides}
+        done < "${guides}"
 
         # Consolidate counts for unique sequences
         awk -F, '{count[\$3] += \$4} END {for (seq in count) print seq "," count[seq]}' temp_sequences.csv >> ${meta}_unique_sequences.csv
