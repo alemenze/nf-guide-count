@@ -13,7 +13,7 @@ process ExtractUnique {
 
     input:
         tuple val(meta), path(stitched_reads)
-        path(params.guides), stageAs: 'guides.csv'
+        path(guides)
 
     output:
         tuple val(meta), path("*_unique_sequences.csv"), emit: uniqueSeqs
@@ -26,7 +26,7 @@ process ExtractUnique {
             if [[ "$name" == "name" && "$guide" == "guide" ]]; then
                 continue
             fi
-            
+
             grep -B1 -A1 "\$guide" ${stitched_reads} | awk -v name="\$name" -v str="\$guide" '
             BEGIN { FS = "" }
             {
@@ -45,7 +45,7 @@ process ExtractUnique {
                     print name "," str "," seq "," sequence_counts[seq];
                 }
             }' >> temp_sequences.csv
-        done < guides.csv
+        done < ${guides}
 
         # Consolidate counts for unique sequences
         awk -F, '{count[\$3] += \$4} END {for (seq in count) print seq "," count[seq]}' temp_sequences.csv >> ${meta}_unique_sequences.csv

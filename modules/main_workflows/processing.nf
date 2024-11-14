@@ -40,11 +40,13 @@ workflow Processing {
         )
 
         CountGuides(
-            Panda_Stitch.out.paired
+            Panda_Stitch.out.paired,
+            file(params.guides)
         )
 
         ExtractUnique(
-            Panda_Stitch.out.paired
+            Panda_Stitch.out.paired,
+            file(param.guides)
         )
 
         Multiqc(

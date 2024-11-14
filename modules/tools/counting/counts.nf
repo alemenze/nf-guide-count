@@ -13,7 +13,7 @@ process CountGuides {
 
     input:
         tuple val(meta), path(stitched_reads)
-        path(params.guides), stageAs: 'guides.csv'
+        path(guides)
 
     output:
         tuple val(meta), path("*_guide_counts.csv"), emit: counts
@@ -28,6 +28,6 @@ process CountGuides {
             fi
             count=\$(grep -c "\$guide" ${stitched_reads})
             echo "\$name,\$guide,\$count" >> ${meta}_guide_counts.csv
-        done < guides.csv
+        done < ${guides}
         """
 }
