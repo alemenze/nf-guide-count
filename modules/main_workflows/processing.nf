@@ -46,7 +46,7 @@ workflow Processing {
 
         ExtractUnique(
             Panda_Stitch.out.paired,
-            file(param.guides)
+            file(params.guides)
         )
 
         Multiqc(
