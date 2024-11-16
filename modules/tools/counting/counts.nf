@@ -23,7 +23,7 @@ process CountGuides {
         echo "Name,Guide,Count" > ${meta}_guide_counts.csv
         while IFS=, read -r name guide; do
             # Skip the header line if it's the first line
-            if [[ "$name" == "name" && "$guide" == "guide" ]]; then
+            if [[ "\$name" == "name" && "\$guide" == "guide" ]]; then
                 continue
             fi
             count=\$(grep -c "\$guide" ${stitched_reads})
