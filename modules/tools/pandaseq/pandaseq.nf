@@ -4,7 +4,7 @@ nextflow.enable.dsl=2
 // Process definition
 process Panda_Stitch {
     tag "${meta}"
-    label 'process_medium'
+    label 'process_high'
 
     publishDir "${params.outdir}/stitched",
         mode: "copy",
