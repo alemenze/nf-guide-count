@@ -22,11 +22,6 @@ process ExtractUnique {
         """
         echo "Name,String,Upstream-Downstream Sequence,Count" >> ${meta}_unique_sequences.csv
         while IFS=, read -r name guide; do
-            # Skip the header line if it's the first line
-            if [[ "\$name" == "name" && "\$guide" == "guide" ]]; then
-                continue
-            fi
-
             grep -B1 -A1 "\$guide" ${stitched_reads} | awk -v name="\$name" -v str="\$guide" '
             BEGIN { FS = "" }
             {
