@@ -7,7 +7,7 @@ nextflow.enable.dsl=2
 
 process Trimgalore {
     tag "${meta}"
-    label 'process_medium'
+    label 'process_high'
 
     publishDir "${params.outdir}/trimgalore/",
         mode: "copy",
